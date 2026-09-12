@@ -14,6 +14,10 @@ The new SPI module commits complete writes when chip select returns high
 
 ## Verification
 
+[PWM verification and requirement coverage](docs/pwm_verification.md)
+
+[PWM test source](test/test_pwm.py)
+
 The suite includes the original UWASIC SPI test and coverage for every duty setting all sixteen outputs invalid addresses reads malformed frames reset behavior and asynchronous SPI timing
 
 ## Run locally
