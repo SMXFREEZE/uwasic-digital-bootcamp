@@ -1,37 +1,24 @@
-# Sample testbench for a Tiny Tapeout project
+# Simulation
 
-This is a sample testbench for a Tiny Tapeout project. It uses [cocotb](https://docs.cocotb.org/en/stable/) to drive the DUT and check the outputs.
-See below to get started or for more information, check the [website](https://tinytapeout.com/hdl/testing/).
-
-## Setting up
-
-1. Edit [Makefile](Makefile) and modify `PROJECT_SOURCES` to point to your Verilog files.
-2. Edit [tb.v](tb.v) and replace `tt_um_example` with your module name.
-
-## How to run
-
-To run the RTL simulation:
+The testbench instantiates the project with a 10 MHz system clock
+Dependencies are listed in requirements.txt
 
 ```sh
-make -B
+make
+python ../scripts/check_results.py results.xml
 ```
 
-To run gatelevel simulation, first harden your project and copy `../runs/wokwi/results/final/verilog/gl/{your_module_name}.v` to `gate_level_netlist.v`.
+The suite runs the supplied SPI regression plus PWM and SPI edge case tests
+The result checker fails when a test fails or the result file contains no tests
 
-Then run:
+## Gate level simulation
+
+The GDS workflow supplies the synthesized netlist and process models
 
 ```sh
-make -B GATES=yes
+make GATES=yes
 ```
 
-## How to view the VCD file
+## Waveforms
 
-Using GTKWave
-```sh
-gtkwave tb.vcd tb.gtkw
-```
-
-Using Surfer
-```sh
-surfer tb.vcd
-```
+Simulation produces tb.vcd for inspection in GTKWave or Surfer
