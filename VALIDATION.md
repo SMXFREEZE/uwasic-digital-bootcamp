@@ -27,8 +27,12 @@ The duty sweep matched each expected digital timing ratio
 
 [Documentation generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664357022)
 
-The tested implementation is commit 69c54a149c369b87571541ef3f0a0aa1e9663848
-Subsequent commits update documentation and verification records
+The initial hosted run tested commit 69c54a149c369b87571541ef3f0a0aa1e9663848
+
+The review revision removes unnecessary reset and clear logic from the SPI transaction buffer
+All eight local tests pass including a partial first frame after reset
+Local synthesis reduces the SPI module from 134 to 117 generic cells
+A fresh hosted build is required to measure mapped cells and validate the revised layout
 
 [Generated chip layout](https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds)
 
