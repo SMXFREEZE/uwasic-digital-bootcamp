@@ -64,10 +64,12 @@
     "verilator_lint": "passed with filename naming warning excluded for Tiny Tapeout project convention"
   },
   "hosted_checks": {
-    "gds": "not run",
-    "precheck": "not run",
-    "gate_level_simulation": "not run",
-    "docs": "not run"
+    "simulation": "passed",
+    "gds": "passed",
+    "precheck": "passed",
+    "gate_level_simulation": "passed",
+    "docs": "passed",
+    "viewer": "passed"
   },
   "tools": {
     "cocotb": "1.9.2",
@@ -75,5 +77,24 @@
     "verilator": "5.053 devel",
     "yosys": "0.69+20",
     "oss_cad_suite_release": "2026-09-11"
-  }
+  },
+  "repository": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp",
+  "tested_commit": "69c54a149c369b87571541ef3f0a0aa1e9663848",
+  "workflow_runs": {
+    "simulation": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664351792",
+    "gds_precheck_gate_level_and_viewer": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060",
+    "docs": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664357022"
+  },
+  "gds_artifact": {
+    "url": "https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds",
+    "bytes": 1469210,
+    "sha256": "58ddde05b64ae098710a37d1cbe8a8b6ce8791ed5362f7b9b0d1d80541fe72e2"
+  },
+  "onboarding_review": {
+    "requested_at": "2026-09-11T21:34:00-04:00",
+    "requested_from": "project-lead-digital",
+    "status": "pending team review",
+    "post_url": "https://discord.com/channels/1306680826402050048/1359753695709106356/threads/1548136728769069177"
+  },
+  "hardware_testing": "not performed"
 }
