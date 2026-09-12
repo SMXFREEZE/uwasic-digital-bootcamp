@@ -1,5 +1,7 @@
 name: test
-on: [push, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-24.04
@@ -28,8 +30,7 @@ jobs:
           cd test
           make clean
           make
-          # make will return success even if the test fails, so check for failure in the results.xml
-          ! grep failure results.xml
+          python ../scripts/check_results.py results.xml
 
       - name: Test Summary
         uses: test-summary/action@v2.3
