@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-11",
+  "date": "2026-09-12",
   "upstream_repository": "https://github.com/UW-ASIC/onboarding-start",
   "upstream_commit": "760b1c856ef0e88284a0c100269f042da920dfd3",
   "simulation": {
@@ -43,13 +43,13 @@
         "module": "test_spi_edges",
         "test": "test_spi_commits_only_complete_frames",
         "status": "pass",
-        "simulation_ns": "2635474.001000017"
+        "simulation_ns": "2893627.001000017"
       },
       {
         "module": "test_spi_edges",
         "test": "test_spi_reads_invalid_addresses_and_idle_clocks",
         "status": "pass",
-        "simulation_ns": "23084660.000999987"
+        "simulation_ns": "23084760.000999987"
       },
       {
         "module": "test_spi_edges",
@@ -79,16 +79,16 @@
     "oss_cad_suite_release": "2026-09-11"
   },
   "repository": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp",
-  "tested_commit": "69c54a149c369b87571541ef3f0a0aa1e9663848",
+  "tested_commit": "7fd000ed1758d1bdd934c53753d639993cd35afa",
   "workflow_runs": {
-    "simulation": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664351792",
-    "gds_precheck_gate_level_and_viewer": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060",
-    "docs": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664357022"
+    "simulation": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874068",
+    "gds_precheck_gate_level_and_viewer": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874098",
+    "docs": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874083"
   },
   "gds_artifact": {
     "url": "https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds",
-    "bytes": 1469210,
-    "sha256": "58ddde05b64ae098710a37d1cbe8a8b6ce8791ed5362f7b9b0d1d80541fe72e2"
+    "bytes": 1427572,
+    "sha256": "46b76623d28cf22799cdd12478b068828cf06eaab5a61537d3ef724dbfb6e00d"
   },
   "onboarding_review": {
     "requested_at": "2026-09-11T21:34:00-04:00",
@@ -96,5 +96,48 @@
     "status": "pending team review",
     "post_url": "https://discord.com/channels/1306680826402050048/1359753695709106356/threads/1548136728769069177"
   },
-  "hardware_testing": "not performed"
+  "hardware_testing": "not performed",
+  "previous_hosted_validation": {
+    "tested_commit": "69c54a149c369b87571541ef3f0a0aa1e9663848",
+    "workflow_runs": {
+      "simulation": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664351792",
+      "gds_precheck_gate_level_and_viewer": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060",
+      "docs": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664357022"
+    },
+    "hosted_checks": {
+      "simulation": "passed",
+      "gds": "passed",
+      "precheck": "passed",
+      "gate_level_simulation": "passed",
+      "docs": "passed",
+      "viewer": "passed"
+    },
+    "gds_artifact": {
+      "url": "https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds",
+      "bytes": 1469210,
+      "sha256": "58ddde05b64ae098710a37d1cbe8a8b6ce8791ed5362f7b9b0d1d80541fe72e2"
+    }
+  },
+  "area_comparison": {
+    "generic_pwm_cells_before": 152,
+    "generic_pwm_cells_after": 124,
+    "generic_total_cells_before": 286,
+    "generic_total_cells_after": 258,
+    "original_mapped_cells_excluding_fill_and_tap": 428,
+    "change": "Narrow the PWM divider counter from eleven bits to four bits for the reachable range zero through twelve",
+    "revised_mapped_cells_excluding_fill_and_tap": 390,
+    "mapped_cells_removed": 38,
+    "original_utilisation_percent": 28.72,
+    "revised_utilisation_percent": 26.597,
+    "original_wire_length_um": 8468,
+    "revised_wire_length_um": 7925
+  },
+  "review_revision": {
+    "reviewer": "Ryan E",
+    "feedback": "Reduce cell usage and provide PWM verification",
+    "pwm_tests_present_in_original_submission": true,
+    "pwm_coverage_document": "docs/pwm_verification.md",
+    "additional_regression": "Partial first SPI frames after reset leave all outputs at zero",
+    "status": "technical revision completed and awaiting team review"
+  }
 }
