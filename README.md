@@ -1,18 +1,60 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
+# UWASIC Digital Onboarding
 
-## Welcome to UWASIC!
+Sami El Figha
 
-We are a University of Waterloo design team that makes ASICs (application-specific integrated circuits).
+Electrical Engineering
 
-Please read the [onboarding documentation](https://docs.uwasic.com/s/onboarding) first.
+## Project
 
-Then, fork this repository to get started.
-Happy coding!
+An SPI controlled peripheral with sixteen independently enabled outputs and a shared PWM generator
 
-## Set up your Verilog project
+The implementation follows the UWASIC digital onboarding specification
+The supplied PWM module is retained unchanged
+The new SPI module commits complete writes when chip select returns high
 
-1. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties.
-2. Edit [docs/info.md](docs/info.md) and add a description of your project.
-3. Add your Verilog files to the `src` folder.
-4. Edit [test/Makefile](test/Makefile) and modify `PROJECT_SOURCES` to point to your Verilog files.
-5. Edit [test/tb.v](test/tb.v) and replace `tt_um_example` with your module name.
+## Verification
+
+The suite includes the original UWASIC SPI test and coverage for every duty setting all sixteen outputs invalid addresses reads malformed frames reset behavior and asynchronous SPI timing
+
+## Run locally
+
+Install Icarus Verilog and Python with the dependencies below
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r test/requirements.txt
+make -C test
+python scripts/check_results.py test/results.xml
+```
+
+## Repository contents
+
+| Path | Purpose |
+| --- | --- |
+| src/spi_peripheral.v | SPI synchronization framing validation and registers |
+| src/pwm_peripheral.v | Original UWASIC PWM peripheral |
+| src/project.v | Tiny Tapeout integration |
+| test/test.py | Original SPI regression |
+| test/test_pwm.py | Frequency duty sweep enable controls and reset checks |
+| test/test_spi_edges.py | Protocol robustness and asynchronous timing |
+| docs/info.md | Tiny Tapeout datasheet |
+| docs/design_walkthrough.md | Design reasoning and review questions |
+| VALIDATION.md | Recorded verification status |
+
+## GitHub workflows
+
+The test workflow runs the complete simulation suite
+The GDS workflow builds the layout runs Tiny Tapeout prechecks and repeats the tests against the gate level netlist
+The documentation workflow builds the datasheet
+
+Enable GitHub Actions for a fork and select GitHub Actions as the Pages source to publish the layout viewer
+Physical design and gate level checks require successful hosted workflow runs before the bootcamp can be considered complete
+
+## Sources
+
+[UWASIC onboarding guide](https://docs.uwasic.com/s/onboarding)
+
+[UWASIC starter repository](https://github.com/UW-ASIC/onboarding-start)
+
+This project retains the Apache license and original source attribution
