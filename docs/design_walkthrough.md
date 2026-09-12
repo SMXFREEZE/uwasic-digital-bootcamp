@@ -7,8 +7,6 @@ Data is shifted on synchronized rising SCLK edges
 A register changes only when chip select returns high after exactly sixteen bits
 Reads and unmapped addresses leave the register bank unchanged
 The bit counter saturates at seventeen so an overlong frame cannot wrap into a valid transaction
-The transaction shift register has no reset or per frame clear because sixteen captured bits replace its entire contents before commit
-The bit count active flag synchronizers and output registers retain their reset behavior
 
 ## Clock crossing
 
@@ -19,7 +17,9 @@ Functional simulation does not model metastability
 
 ## PWM
 
-The original UWASIC PWM module is unchanged
+The UWASIC PWM divider counter is narrowed to four bits because it resets after twelve
+Starting from reset the counter can only visit values zero through twelve
+The removed upper bits were therefore always zero and the divider period is unchanged
 Its divider and eight bit counter produce one period every 3328 system clock cycles
 The duty fraction is the register value divided by 256 with a continuously high output at the maximum value
 Output enable takes precedence over PWM enable
