@@ -50,11 +50,17 @@ module spi_peripheral (
         end
     end
 
+    // A complete frame overwrites every shift bit before it can be committed
+    // Keeping the shift register unreset avoids reset and clear gates on the data path
+    always @(posedge clk) begin
+        if (active && !ncs_sync[1] && sclk_rising && bit_count < 5'd16)
+            transaction <= {transaction[14:0], copi_sync[1]};
+    end
+
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             active <= 1'b0;
             bit_count <= 5'd0;
-            transaction <= 16'd0;
             en_reg_out_7_0 <= 8'd0;
             en_reg_out_15_8 <= 8'd0;
             en_reg_pwm_7_0 <= 8'd0;
@@ -63,7 +69,6 @@ module spi_peripheral (
         end else if (ncs_falling) begin
             active <= 1'b1;
             bit_count <= 5'd0;
-            transaction <= 16'd0;
         end else if (ncs_rising) begin
             // Commit exactly one complete write when chip select is released
             // Reads and invalid addresses leave every register unchanged
@@ -80,7 +85,6 @@ module spi_peripheral (
             active <= 1'b0;
         end else if (active && !ncs_sync[1] && sclk_rising) begin
             if (bit_count < 5'd16) begin
-                transaction <= {transaction[14:0], copi_sync[1]};
                 bit_count <= bit_count + 5'd1;
             end else begin
                 // Saturation prevents long malformed frames wrapping to valid
