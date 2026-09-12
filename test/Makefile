@@ -4,8 +4,8 @@
 # defaults
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
-SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v
+SRC_DIR = $(CURDIR)/../src
+PROJECT_SOURCES = project.v spi_peripheral.v pwm_peripheral.v
 
 ifneq ($(GATES),yes)
 
@@ -26,7 +26,7 @@ VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitiv
 VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
 
 # this gets copied in by the GDS action workflow
-VERILOG_SOURCES += $(PWD)/gate_level_netlist.v
+VERILOG_SOURCES += $(CURDIR)/gate_level_netlist.v
 
 endif
 
@@ -34,11 +34,11 @@ endif
 COMPILE_ARGS 		+= -I$(SRC_DIR)
 
 # Include the testbench sources:
-VERILOG_SOURCES += $(PWD)/tb.v
+VERILOG_SOURCES += $(CURDIR)/tb.v
 TOPLEVEL = tb
 
 # MODULE is the basename of the Python test file
-MODULE = test
+MODULE = test,test_pwm,test_spi_edges
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim

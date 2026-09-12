@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: © 2024 Tiny Tapeout
 # SPDX-License-Identifier: Apache-2.0
+# Modified to move placeholder PWM tests into the complete test_pwm module
 
 import cocotb
 from cocotb.clock import Clock
@@ -148,14 +149,3 @@ async def test_spi(dut):
     await ClockCycles(dut.clk, 30000)
 
     dut._log.info("SPI test completed successfully")
-
-@cocotb.test()
-async def test_pwm_freq(dut):
-    # Write your test here
-    dut._log.info("PWM Frequency test completed successfully")
-
-
-@cocotb.test()
-async def test_pwm_duty(dut):
-    # Write your test here
-    dut._log.info("PWM Duty Cycle test completed successfully")
