@@ -1,10 +1,10 @@
 # Verification status
 
-Validated locally on September 11 2026
+Validated on September 11 2026
 
-## Completed
+## Simulation and static checks
 
-Eight simulation tests passed with no failures or skipped tests
+Eight local simulation tests passed with no failures or skipped tests
 The supplied UWASIC SPI regression passed
 Every duty value from zero through 255 was verified
 All sixteen output pins were tested
@@ -19,12 +19,26 @@ The measured PWM frequency was approximately 3005 Hz
 The accepted range is 2970 through 3030 Hz
 The duty sweep matched each expected digital timing ratio
 
-## Pending
+## Hosted checks
 
-GitHub repository publication requires sign in
-Hosted GDS generation Tiny Tapeout precheck gate level simulation and documentation generation have not run
+[Simulation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664351792)
+
+[GDS generation physical precheck gate level simulation and viewer generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060)
+
+[Documentation generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664357022)
+
+The tested implementation is commit 69c54a149c369b87571541ef3f0a0aa1e9663848
+Subsequent commits update documentation and verification records
+
+[Generated chip layout](https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds)
+
+## Review status
+
+The public repository was posted in the UWASIC onboarding forum
+Review was requested from the digital project lead on September 11 2026
+Team review and onboarding approval remain pending
+
 No fabrication or hardware testing has been performed
-No completion review has been requested in Discord
 
 ## Reproduction
 
