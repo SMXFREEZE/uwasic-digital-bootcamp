@@ -1,0 +1,79 @@
+{
+  "date": "2026-09-11",
+  "upstream_repository": "https://github.com/UW-ASIC/onboarding-start",
+  "upstream_commit": "760b1c856ef0e88284a0c100269f042da920dfd3",
+  "simulation": {
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "duty_values_tested": 256,
+    "measured_frequency_hz": 3004.807692,
+    "tests_detail": [
+      {
+        "module": "test",
+        "test": "test_spi",
+        "status": "pass",
+        "simulation_ns": "14383900.001"
+      },
+      {
+        "module": "test_pwm",
+        "test": "test_pwm_frequency",
+        "status": "pass",
+        "simulation_ns": "5991500.001"
+      },
+      {
+        "module": "test_pwm",
+        "test": "test_pwm_all_duty_values",
+        "status": "pass",
+        "simulation_ns": "171603603.001"
+      },
+      {
+        "module": "test_pwm",
+        "test": "test_pwm_enable_precedence_all_outputs",
+        "status": "pass",
+        "simulation_ns": "30811902.001000017"
+      },
+      {
+        "module": "test_pwm",
+        "test": "test_reset_during_pwm",
+        "status": "pass",
+        "simulation_ns": "1887060.0009999871"
+      },
+      {
+        "module": "test_spi_edges",
+        "test": "test_spi_commits_only_complete_frames",
+        "status": "pass",
+        "simulation_ns": "2635474.001000017"
+      },
+      {
+        "module": "test_spi_edges",
+        "test": "test_spi_reads_invalid_addresses_and_idle_clocks",
+        "status": "pass",
+        "simulation_ns": "23084660.000999987"
+      },
+      {
+        "module": "test_spi_edges",
+        "test": "test_spi_asynchronous_timing_and_reset",
+        "status": "pass",
+        "simulation_ns": "10975684.000999987"
+      }
+    ]
+  },
+  "static_checks": {
+    "yosys_synthesis": "passed",
+    "verilator_lint": "passed with filename naming warning excluded for Tiny Tapeout project convention"
+  },
+  "hosted_checks": {
+    "gds": "not run",
+    "precheck": "not run",
+    "gate_level_simulation": "not run",
+    "docs": "not run"
+  },
+  "tools": {
+    "cocotb": "1.9.2",
+    "iverilog": "14.0 devel",
+    "verilator": "5.053 devel",
+    "yosys": "0.69+20",
+    "oss_cad_suite_release": "2026-09-11"
+  }
+}
