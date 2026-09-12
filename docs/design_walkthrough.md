@@ -7,6 +7,8 @@ Data is shifted on synchronized rising SCLK edges
 A register changes only when chip select returns high after exactly sixteen bits
 Reads and unmapped addresses leave the register bank unchanged
 The bit counter saturates at seventeen so an overlong frame cannot wrap into a valid transaction
+The transaction shift register has no reset or per frame clear because sixteen captured bits replace its entire contents before commit
+The bit count active flag synchronizers and output registers retain their reset behavior
 
 ## Clock crossing
 
