@@ -1,51 +1,64 @@
 # Verification status
 
-Validated on September 11 2026
+Validated on September 12 2026
 
-## Simulation and static checks
+## Review revision
+
+The PWM divider counter is narrowed from eleven bits to four bits
+It resets after twelve so the reachable values are zero through twelve
+The seven removed upper bits were always zero after reset
+The divider period and PWM behavior are unchanged
+
+## Cell usage
+
+| Metric | Original submission | Review revision |
+| --- | --- | --- |
+| Mapped cells excluding fill and tap | 428 | 390 |
+| Routed wire length in micrometres | 8468 | 7925 |
+
+The revised layout uses thirty eight fewer cells
+The downloaded GDS was independently checked against the reported cell count
+
+[Original build](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060)
+
+[Revised build](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874098)
+
+## PWM verification
+
+[PWM test source](test/test_pwm.py)
+
+[Requirement coverage](docs/pwm_verification.md)
+
+The tests cover all 256 duty values frequency limits both output banks mixed enable masks and reset
+Constant high and low outputs use bounded observation periods
+Transition waits use explicit timeouts
+The measured PWM frequency is approximately 3005 Hz within the accepted range of 2970 through 3030 Hz
+
+## Results
 
 Eight local simulation tests passed with no failures or skipped tests
-The supplied UWASIC SPI regression passed
-Every duty value from zero through 255 was verified
-All sixteen output pins were tested
-Output enable precedence and mixed PWM enable masks were verified
-Reads all invalid addresses truncated frames and overlong frames were checked
-Reset behavior and asynchronous SPI timing were checked
 Yosys synthesis and structural checks passed
-Verilator static checks passed with the expected Tiny Tapeout filename naming exception
-The PWM divider uses four bits for its zero through twelve count range
+Verilator checks passed with the expected Tiny Tapeout filename naming exception
+A partial first frame after reset was added to the SPI regression
 
-The measured PWM frequency was approximately 3005 Hz
-The accepted range is 2970 through 3030 Hz
-The duty sweep matched each expected digital timing ratio
+[Hosted source simulation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874068)
 
-## Hosted checks
+[GDS generation physical precheck gate level simulation and viewer generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874098)
 
-[Simulation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664351792)
+[Documentation generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874083)
 
-[GDS generation physical precheck gate level simulation and viewer generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060)
-
-[Documentation generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664357022)
-
-The initial hosted run tested commit 69c54a149c369b87571541ef3f0a0aa1e9663848
-
-The review revision narrows the PWM divider counter from eleven bits to four bits
-The counter resets after twelve so its seven upper bits remain zero after reset
-The SPI transaction behavior is unchanged
-Local synthesis reduces the PWM module from 152 to 124 generic cells
-Fresh simulation physical checks and gate level tests are running for this revision
+The tested implementation is commit 7fd000ed1758d1bdd934c53753d639993cd35afa
+Later commits update documentation and verification records
 
 [Generated chip layout](https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds)
 
-## Review status
+## Team review
 
-The public repository was posted in the UWASIC onboarding forum
-Review was requested from the digital project lead on September 11 2026
-Team review and onboarding approval remain pending
-
+The revision addresses the cell usage feedback and includes direct links to the PWM tests
+Team approval remains pending
 No fabrication or hardware testing has been performed
 
 ## Reproduction
 
 Run the commands in the README
-Detailed test results and tool versions are recorded in the validation directory
+Detailed test results tool versions and layout checksums are recorded in the validation directory
