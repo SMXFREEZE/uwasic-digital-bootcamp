@@ -9,7 +9,7 @@ Electrical Engineering
 An SPI controlled peripheral with sixteen independently enabled outputs and a shared PWM generator
 
 The implementation follows the UWASIC digital onboarding specification
-The supplied PWM module is retained unchanged
+The supplied PWM module uses a four bit divider counter for values zero through twelve
 The new SPI module commits complete writes when chip select returns high
 
 ## Verification
@@ -37,7 +37,7 @@ python scripts/check_results.py test/results.xml
 | Path | Purpose |
 | --- | --- |
 | src/spi_peripheral.v | SPI synchronization framing validation and registers |
-| src/pwm_peripheral.v | Original UWASIC PWM peripheral |
+| src/pwm_peripheral.v | UWASIC PWM peripheral with a narrowed divider counter |
 | src/project.v | Tiny Tapeout integration |
 | test/test.py | Original SPI regression |
 | test/test_pwm.py | Frequency duty sweep enable controls and reset checks |

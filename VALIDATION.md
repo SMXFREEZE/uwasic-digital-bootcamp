@@ -13,7 +13,7 @@ Reads all invalid addresses truncated frames and overlong frames were checked
 Reset behavior and asynchronous SPI timing were checked
 Yosys synthesis and structural checks passed
 Verilator static checks passed with the expected Tiny Tapeout filename naming exception
-The supplied PWM source remains unchanged
+The PWM divider uses four bits for its zero through twelve count range
 
 The measured PWM frequency was approximately 3005 Hz
 The accepted range is 2970 through 3030 Hz
@@ -29,10 +29,11 @@ The duty sweep matched each expected digital timing ratio
 
 The initial hosted run tested commit 69c54a149c369b87571541ef3f0a0aa1e9663848
 
-The review revision removes unnecessary reset and clear logic from the SPI transaction buffer
-All eight local tests pass including a partial first frame after reset
-Local synthesis reduces the SPI module from 134 to 117 generic cells
-A fresh hosted build is required to measure mapped cells and validate the revised layout
+The review revision narrows the PWM divider counter from eleven bits to four bits
+The counter resets after twelve so its seven upper bits remain zero after reset
+The SPI transaction behavior is unchanged
+Local synthesis reduces the PWM module from 152 to 124 generic cells
+Fresh simulation physical checks and gate level tests are running for this revision
 
 [Generated chip layout](https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds)
 
