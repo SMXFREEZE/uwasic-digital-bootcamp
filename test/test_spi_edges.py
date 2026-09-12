@@ -12,6 +12,10 @@ from helpers import configure, finish_spi, frame, outputs, reset, send_bits, wri
 @cocotb.test()
 async def test_spi_commits_only_complete_frames(dut):
     await reset(dut)
+    # A partial first frame must not expose unknown shift register contents
+    for length in (1, 8, 15):
+        await send_bits(dut, frame(0, 0xFF)[:length])
+        assert outputs(dut) == 0, f"Partial first frame length {length} changed output"
     await write_register(dut, 0, 0xA5)
     await send_bits(dut, frame(0, 0x3C), finish=False)
     assert outputs(dut) == 0xA5, "Register changed before chip select release"
