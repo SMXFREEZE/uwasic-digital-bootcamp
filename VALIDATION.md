@@ -1,64 +1,56 @@
-# Verification status
+# Verification results
 
-Validated on September 12 2026
+September 13 2026
 
-## Review revision
+## Changes
 
-The PWM divider counter is narrowed from eleven bits to four bits
-It resets after twelve so the reachable values are zero through twelve
-The seven removed upper bits were always zero after reset
-The divider period and PWM behavior are unchanged
+The PWM module matches the original UWASIC file byte for byte
+The SPI receiver uses the bit count instead of a separate active flag
+The shift buffer no longer needs reset or chip select gating because a complete frame replaces all sixteen bits
+The counter still rejects incomplete and overlong frames
 
 ## Cell usage
 
-| Metric | Original submission | Review revision |
+| Metric | Original submission | Current build |
 | --- | --- | --- |
-| Mapped cells excluding fill and tap | 428 | 390 |
-| Routed wire length in micrometres | 8468 | 7925 |
+| Cells excluding fill and tap | 428 | 415 |
+| Routed wire length in micrometres | 8468 | 7842 |
 
-The revised layout uses thirty eight fewer cells
-The downloaded GDS was independently checked against the reported cell count
+The layout uses thirteen fewer cells and meets the target of fewer than 420
+The downloaded GDS contains the same 415 cells reported by the build
 
 [Original build](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34664339060)
 
-[Revised build](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874098)
+[Current layout and gate level checks](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34782054221)
 
-## PWM verification
+## Tests
 
-[PWM test source](test/test_pwm.py)
+All eight existing tests pass with no failures or skipped tests
+No tests were added or removed for this revision
+The PWM tests cover all 256 duty values frequency limits output enables and reset
+The measured frequency is approximately 3005 Hz within the required range of 2970 through 3030 Hz
 
-[Requirement coverage](docs/pwm_verification.md)
+Yosys synthesis and structural checks pass
+Verilator checks pass with the usual Tiny Tapeout filename exception
+Hosted source simulation documentation generation GDS generation physical precheck gate level simulation and viewer generation all pass
 
-The tests cover all 256 duty values frequency limits both output banks mixed enable masks and reset
-Constant high and low outputs use bounded observation periods
-Transition waits use explicit timeouts
-The measured PWM frequency is approximately 3005 Hz within the accepted range of 2970 through 3030 Hz
+[PWM tests](test/test_pwm.py)
 
-## Results
+[PWM requirement coverage](docs/pwm_verification.md)
 
-Eight local simulation tests passed with no failures or skipped tests
-Yosys synthesis and structural checks passed
-Verilator checks passed with the expected Tiny Tapeout filename naming exception
-A partial first frame after reset was added to the SPI regression
+[Source simulation](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34782054234)
 
-[Hosted source simulation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874068)
+[Documentation build](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34782054196)
 
-[GDS generation physical precheck gate level simulation and viewer generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874098)
+The tested implementation is commit da4a7688c549911376db2ca1962b6319745933b5
+Later commits update notes and verification records
 
-[Documentation generation passed](https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874083)
+[Generated layout](https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds)
 
-The tested implementation is commit 7fd000ed1758d1bdd934c53753d639993cd35afa
-Later commits update documentation and verification records
+## Review
 
-[Generated chip layout](https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds)
-
-## Team review
-
-The revision addresses the cell usage feedback and includes direct links to the PWM tests
 Team approval remains pending
-No fabrication or hardware testing has been performed
+No hardware testing has been performed
 
-## Reproduction
-
-Run the commands in the README
-Detailed test results tool versions and layout checksums are recorded in the validation directory
+The README contains the local test commands
+The validation directory records test results tool versions and the layout checksum
