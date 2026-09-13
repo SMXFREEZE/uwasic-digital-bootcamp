@@ -26,7 +26,6 @@ module spi_peripheral (
     reg ncs_previous;
     reg sclk_previous;
 
-    wire ncs_falling = ncs_previous && !ncs_sync[1];
     wire ncs_rising = !ncs_previous && ncs_sync[1];
     wire sclk_rising = !sclk_previous && sclk_sync[1];
 
@@ -49,17 +48,34 @@ module spi_peripheral (
         end
     end
 
+    // Only complete frames can reach the output registers
+    // Sixteen received bits replace the entire buffer
+    always @(posedge clk) begin
+        if (sclk_rising)
+            transaction <= {transaction[14:0], copi_sync[1]};
+    end
+
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             bit_count <= 5'd0;
-            transaction <= 16'd0;
+        end else if (ncs_sync[1]) begin
+            bit_count <= 5'd0;
+        end else if (sclk_rising) begin
+            if (!bit_count[4])
+                bit_count <= bit_count + 5'd1;
+            else
+                // Any extra bit makes the frame invalid until chip select rises
+                bit_count[0] <= 1'b1;
+        end
+    end
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
             en_reg_out_7_0 <= 8'd0;
             en_reg_out_15_8 <= 8'd0;
             en_reg_pwm_7_0 <= 8'd0;
             en_reg_pwm_15_8 <= 8'd0;
             pwm_duty_cycle <= 8'd0;
-        end else if (ncs_falling) begin
-            bit_count <= 5'd0;
         end else if (ncs_rising) begin
             // Commit exactly one complete write when chip select is released
             // Reads and invalid addresses leave every register unchanged
@@ -72,15 +88,6 @@ module spi_peripheral (
                     7'h04: pwm_duty_cycle <= transaction[7:0];
                     default: begin end
                 endcase
-            end
-        end else if (!ncs_sync[1] && sclk_rising) begin
-            if (bit_count < 5'd16) begin
-                // A complete frame overwrites all sixteen bits
-                transaction <= {transaction[14:0], copi_sync[1]};
-                bit_count <= bit_count + 5'd1;
-            end else begin
-                // Saturation prevents long malformed frames wrapping to valid
-                bit_count <= 5'd17;
             end
         end
     end
