@@ -9,8 +9,10 @@ Reads and unmapped addresses leave the register bank unchanged
 The bit counter saturates at seventeen so an overlong frame cannot wrap into a valid transaction
 
 Chip select and the bit count track each frame without a separate active flag
-The shift buffer resets with the device but holds its value between frames
+The shift buffer samples each rising SPI clock without a reset or chip select gate
 Each complete frame overwrites all sixteen bits before a register can change
+Chip select clears the bit count while idle
+The counter stops at sixteen and marks the frame invalid if another bit arrives
 
 ## Clock crossing
 
