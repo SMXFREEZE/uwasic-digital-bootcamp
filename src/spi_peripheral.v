@@ -30,7 +30,6 @@ module spi_peripheral (
     wire ncs_rising = !ncs_previous && ncs_sync[1];
     wire sclk_rising = !sclk_previous && sclk_sync[1];
 
-    reg active;
     reg [4:0] bit_count;
     reg [15:0] transaction;
 
@@ -52,7 +51,6 @@ module spi_peripheral (
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            active <= 1'b0;
             bit_count <= 5'd0;
             transaction <= 16'd0;
             en_reg_out_7_0 <= 8'd0;
@@ -61,13 +59,11 @@ module spi_peripheral (
             en_reg_pwm_15_8 <= 8'd0;
             pwm_duty_cycle <= 8'd0;
         end else if (ncs_falling) begin
-            active <= 1'b1;
             bit_count <= 5'd0;
-            transaction <= 16'd0;
         end else if (ncs_rising) begin
             // Commit exactly one complete write when chip select is released
             // Reads and invalid addresses leave every register unchanged
-            if (active && bit_count == 5'd16 && transaction[15]) begin
+            if (bit_count == 5'd16 && transaction[15]) begin
                 case (transaction[14:8])
                     7'h00: en_reg_out_7_0 <= transaction[7:0];
                     7'h01: en_reg_out_15_8 <= transaction[7:0];
@@ -77,9 +73,9 @@ module spi_peripheral (
                     default: begin end
                 endcase
             end
-            active <= 1'b0;
-        end else if (active && !ncs_sync[1] && sclk_rising) begin
+        end else if (!ncs_sync[1] && sclk_rising) begin
             if (bit_count < 5'd16) begin
+                // A complete frame overwrites all sixteen bits
                 transaction <= {transaction[14:0], copi_sync[1]};
                 bit_count <= bit_count + 5'd1;
             end else begin
