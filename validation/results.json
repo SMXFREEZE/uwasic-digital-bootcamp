@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-12",
+  "date": "2026-09-13",
   "upstream_repository": "https://github.com/UW-ASIC/onboarding-start",
   "upstream_commit": "760b1c856ef0e88284a0c100269f042da920dfd3",
   "simulation": {
@@ -79,16 +79,16 @@
     "oss_cad_suite_release": "2026-09-11"
   },
   "repository": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp",
-  "tested_commit": "7fd000ed1758d1bdd934c53753d639993cd35afa",
+  "tested_commit": "da4a7688c549911376db2ca1962b6319745933b5",
   "workflow_runs": {
-    "simulation": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874068",
-    "gds_precheck_gate_level_and_viewer": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874098",
-    "docs": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34674874083"
+    "simulation": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34782054234",
+    "gds_precheck_gate_level_and_viewer": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34782054221",
+    "docs": "https://github.com/SMXFREEZE/uwasic-digital-bootcamp/actions/runs/34782054196"
   },
   "gds_artifact": {
     "url": "https://smxfreeze.github.io/uwasic-digital-bootcamp/tinytapeout.gds",
-    "bytes": 1427572,
-    "sha256": "46b76623d28cf22799cdd12478b068828cf06eaab5a61537d3ef724dbfb6e00d"
+    "bytes": 1464514,
+    "sha256": "678494d4bbf12c91c961883a20a3e9d28bf12bed67ebddfac4f1e1f9b45dc7b8"
   },
   "onboarding_review": {
     "requested_at": "2026-09-11T21:34:00-04:00",
@@ -120,24 +120,27 @@
   },
   "area_comparison": {
     "generic_pwm_cells_before": 152,
-    "generic_pwm_cells_after": 124,
+    "generic_pwm_cells_after": 152,
+    "generic_spi_cells_before": 134,
+    "generic_spi_cells_after": 110,
     "generic_total_cells_before": 286,
-    "generic_total_cells_after": 258,
+    "generic_total_cells_after": 262,
     "original_mapped_cells_excluding_fill_and_tap": 428,
-    "change": "Narrow the PWM divider counter from eleven bits to four bits for the reachable range zero through twelve",
-    "revised_mapped_cells_excluding_fill_and_tap": 390,
-    "mapped_cells_removed": 38,
+    "revised_mapped_cells_excluding_fill_and_tap": 415,
+    "change": "Restore the supplied PWM and simplify SPI frame counting and shift register control",
     "original_utilisation_percent": 28.72,
-    "revised_utilisation_percent": 26.597,
     "original_wire_length_um": 8468,
-    "revised_wire_length_um": 7925
+    "revised_utilisation_percent": 27.918,
+    "revised_wire_length_um": 7842
   },
   "review_revision": {
     "reviewer": "Ryan E",
-    "feedback": "Reduce cell usage and provide PWM verification",
+    "feedback": "Use fewer than 420 cells without changing the supplied PWM module",
+    "pwm_source_matches_upstream": true,
+    "pwm_sha256": "1faf16991774d6290f5e2bd2ad70a8ff02d8e126cad0fb3179b75e1816867137",
     "pwm_tests_present_in_original_submission": true,
     "pwm_coverage_document": "docs/pwm_verification.md",
-    "additional_regression": "Partial first SPI frames after reset leave all outputs at zero",
-    "status": "technical revision completed and awaiting team review"
+    "tests_changed": false,
+    "status": "pending team review"
   }
 }
