@@ -8,6 +8,10 @@ A register changes only when chip select returns high after exactly sixteen bits
 Reads and unmapped addresses leave the register bank unchanged
 The bit counter saturates at seventeen so an overlong frame cannot wrap into a valid transaction
 
+Chip select and the bit count track each frame without a separate active flag
+The shift buffer resets with the device but holds its value between frames
+Each complete frame overwrites all sixteen bits before a register can change
+
 ## Clock crossing
 
 Each SPI input passes through two flip flops clocked at 10 MHz
@@ -17,9 +21,7 @@ Functional simulation does not model metastability
 
 ## PWM
 
-The UWASIC PWM divider counter is narrowed to four bits because it resets after twelve
-Starting from reset the counter can only visit values zero through twelve
-The removed upper bits were therefore always zero and the divider period is unchanged
+The PWM module is unchanged from the UWASIC starter
 Its divider and eight bit counter produce one period every 3328 system clock cycles
 The duty fraction is the register value divided by 256 with a continuously high output at the maximum value
 Output enable takes precedence over PWM enable
